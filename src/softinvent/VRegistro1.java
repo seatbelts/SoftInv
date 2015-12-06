@@ -7,7 +7,9 @@
 package softinvent;
 
 import Conection.Conectar;
+
 import java.sql.*;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,18 +20,18 @@ import java.util.logging.Logger;
  */
 public class VRegistro1 extends javax.swing.JFrame {
 
-    ResultSet rs;
-    Statement st;
-    Connection connection;
+    private ResultSet rs;
+    private Statement st;
+    private Connection connection;
+    private int contCode = 0;
+    private int[] codes = new int[100000];
        
-       
-    
     public VRegistro1() {
         initComponents();
         
         try {
         Class.forName("org.gjt.mm.mysql.Driver");
-        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/arantza","root","");
+        connection = DriverManager.getConnection("jdbc:mysql://localhost/arantza","root","");
         st = connection.createStatement();
         String s = "select * from chofer"; 
         String u = "select * from unidad";
@@ -284,31 +286,42 @@ public class VRegistro1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        String selchof=ch.getSelectedItem().toString();
-        String seluni=un.getSelectedItem().toString();
+        
+        String selchof = ch.getSelectedItem().toString();
+        String seluni = un.getSelectedItem().toString();
         int trans = Integer.parseInt(tr.getText());
-        int codi = Integer.parseInt(cod.getText());
         
         try {
             Conectar cc = new Conectar();
             Connection cn = cc.Conexion();
             
             PreparedStatement pst = cn.prepareStatement("INSERT INTO registro (chofer, unidad, Transferencia, codigo) VALUES (?,?,?,?)");
-            pst.setString(1, selchof);
-            pst.setString(2, seluni);
-            pst.setInt(3, trans);
-            pst.setInt(4, codi);       
-            int n=pst.executeUpdate();
-            if (n>0){
-            System.out.println("GUARDADO");
+            
+            System.out.println("Guardando");
+            for (Integer code: codes) {
+                pst.setString(1, selchof);
+                pst.setString(2, seluni);
+                pst.setInt(3, trans);
+                pst.setInt(4, code);
             }
+            System.out.println("Guardado");
         } catch (SQLException ex) {
             Logger.getLogger(VRegistro1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void codActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codActionPerformed
-    
+        
+        if (cod.getText().isEmpty()) {
+            cod.setText("");
+        } else {
+            int temp = Integer.parseInt(cod.getText());
+            System.out.println(temp);
+            codes[contCode] = temp;
+            contCode++;
+            cod.setText("");
+            System.out.println(contCode);
+        }
     }//GEN-LAST:event_codActionPerformed
  
     /**

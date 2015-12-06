@@ -23,7 +23,7 @@ public class Conectar {
    public Connection Conexion()  {
       try{
          Class.forName("org.gjt.mm.mysql.Driver");
-         connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/arantza","root","");
+         connection = DriverManager.getConnection("jdbc:mysql://localhost/arantza","root","");
         System.out.println("OK");
       }
       catch(SQLException e){
