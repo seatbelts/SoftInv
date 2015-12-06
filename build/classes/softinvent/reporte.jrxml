@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e0acb6ba-f58f-4b75-b9a5-a9d1db679278">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     registro.`chofer` AS registro_chofer,
+     registro.`unidad` AS registro_unidad,
+     registro.`Transferencia` AS registro_Transferencia,
+     registro.`codigo` AS registro_codigo,
+     unidad.`Unidad` AS unidad_Unidad,
+     chofer.`Nombre` AS chofer_Nombre
+FROM
+     `unidad` unidad INNER JOIN `registro` registro ON unidad.`Unidad` = registro.`unidad`
+     INNER JOIN `chofer` chofer ON registro.`chofer` = chofer.`Nombre`]]>
+	</queryString>
+	<field name="registro_chofer" class="java.lang.String"/>
+	<field name="registro_unidad" class="java.lang.String"/>
+	<field name="registro_Transferencia" class="java.lang.Integer"/>
+	<field name="registro_codigo" class="java.lang.Integer"/>
+	<group name="registro_Transferencia">
+		<groupExpression><![CDATA[$F{registro_Transferencia}]]></groupExpression>
+		<groupHeader>
+			<band height="37">
+				<frame>
+					<reportElement mode="Opaque" x="-21" y="7" width="597" height="24" forecolor="#B89F7D" backcolor="#F2EBDF" uuid="6366b912-3f87-41e1-b1c2-e2b725a4119d"/>
+					<rectangle>
+						<reportElement mode="Opaque" x="21" y="0" width="36" height="24" backcolor="#736343" uuid="9756fec7-7027-44a6-ac62-1fc6e96f8752"/>
+						<graphicElement>
+							<pen lineWidth="0.0"/>
+						</graphicElement>
+					</rectangle>
+					<textField>
+						<reportElement style="SubTitle" x="68" y="0" width="413" height="24" forecolor="#736343" uuid="bb4b97fe-3b36-4756-a0d8-6e68381ab2be"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{registro_Transferencia}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="136" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="166" y="54" width="176" height="64" uuid="91d76915-4c57-47f8-8b24-b4e649941f4a"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Reporte]]></text>
+			</staticText>
+			<image>
+				<reportElement x="4" y="0" width="207" height="102" uuid="527b5b59-86f7-4a47-bbe0-cdb27852d627"/>
+				<imageExpression><![CDATA["C:\\Users\\Ruth\\Desktop\\arantza-logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="0cda694a-bbb2-4906-a791-60268afd8926"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="185" height="15" forecolor="#736343" uuid="15a3c4d4-7d4b-428b-8dc4-9c3acb644c59"/>
+				<text><![CDATA[Chofer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="185" y="0" width="48" height="15" forecolor="#736343" uuid="e43d6711-5a6b-4a2b-8447-b9ccf3f3fe9c"/>
+				<text><![CDATA[Unidad]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="47" y="0" width="119" height="15" uuid="d4d64fbe-aabf-4694-a0a2-4c238400aa5b"/>
+				<textFieldExpression><![CDATA[$F{registro_chofer}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="233" y="0" width="119" height="15" uuid="0bd83f1c-f719-429c-84c5-5baa43fbf459"/>
+				<textFieldExpression><![CDATA[$F{registro_unidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="15" uuid="34699648-56f5-4e52-a7e8-333ec128ed58"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="68" y="0" width="185" height="15" uuid="85b61684-9bae-44df-a29f-0435aa5db341"/>
+					<textFieldExpression><![CDATA[$F{registro_codigo}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Column header" x="4" y="0" width="185" height="15" forecolor="#736343" uuid="968b03a4-cfab-41b9-a987-eab082409ec6"/>
+					<text><![CDATA[Scanner]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="ab2daa9c-299e-458c-8df1-0896d9023cbd"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="f82cf0f5-59cf-4e0c-baa2-6812aaa35894"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="533" y="0" width="40" height="20" forecolor="#736343" uuid="7b299183-0964-4a13-9fb0-55e28f10cf93"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="453" y="0" width="80" height="20" forecolor="#736343" uuid="2c5e6428-ffb9-4417-a430-2aa063c93b2e"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="b980c1a6-c0ca-4372-b699-aa2b2e941db8"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
