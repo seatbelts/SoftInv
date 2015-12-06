@@ -6,9 +6,19 @@
 
 package softinvent;
 
+import java.io.File;
+
 
 public class SoftInvent {
     public static void main(String[] args) {
+        
+        File f = new File("C:/Arantza");
+        
+        if (!f.exists()) {
+            f.mkdir();
+        }
+        
+        
         VMenu vv = new VMenu ();
         vv.setVisible(true);// TODO code application logic here
     }

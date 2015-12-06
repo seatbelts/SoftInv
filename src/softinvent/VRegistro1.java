@@ -7,8 +7,18 @@
 package softinvent;
 
 import Conection.Conectar;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.nio.file.Path;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,13 +28,16 @@ import java.util.logging.Logger;
  *
  * @author Ruth
  */
+
+//TODO Cambiar las bases a txts(y que funcionen...)
 public class VRegistro1 extends javax.swing.JFrame {
 
     private ResultSet rs;
     private Statement st;
     private Connection connection;
     private int contCode = 0;
-    private int[] codes = new int[100000];
+    private int[] codes;
+    private ArrayList<String> c = new ArrayList<>();
        
     public VRegistro1() {
         initComponents();
@@ -288,25 +301,47 @@ public class VRegistro1 extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         
         String selchof = ch.getSelectedItem().toString();
+        System.out.println(selchof);
         String seluni = un.getSelectedItem().toString();
-        int trans = Integer.parseInt(tr.getText());
+        System.out.println(seluni);
+        String trans = tr.getText().toString();
+        System.out.println(trans);
+        String name = trans + ".txt";
+        System.out.println(name);
         
         try {
-            Conectar cc = new Conectar();
-            Connection cn = cc.Conexion();
+            File path = new File("C:/Arantza/Reportes");
             
-            PreparedStatement pst = cn.prepareStatement("INSERT INTO registro (chofer, unidad, Transferencia, codigo) VALUES (?,?,?,?)");
+            if (!path.exists()) {
+                path.mkdir();
+            } 
             
-            System.out.println("Guardando");
-            for (Integer code: codes) {
-                pst.setString(1, selchof);
-                pst.setString(2, seluni);
-                pst.setInt(3, trans);
-                pst.setInt(4, code);
+            File file = new File("C:/Arantza/Reportes/" + name);
+            
+            if (!file.exists()) {
+                file.createNewFile();
             }
-            System.out.println("Guardado");
-        } catch (SQLException ex) {
-            Logger.getLogger(VRegistro1.class.getName()).log(Level.SEVERE, null, ex);
+            
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            
+            bw.write(selchof);
+            bw.newLine();
+            bw.write(seluni);
+            bw.newLine();
+            bw.write(trans);
+            bw.newLine();
+            
+            for (String code: c) {
+                bw.write(code);
+                bw.newLine();
+                System.out.println(code);
+            }
+            
+            bw.close();
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -315,12 +350,14 @@ public class VRegistro1 extends javax.swing.JFrame {
         if (cod.getText().isEmpty()) {
             cod.setText("");
         } else {
-            int temp = Integer.parseInt(cod.getText());
-            System.out.println(temp);
-            codes[contCode] = temp;
+            String temp = cod.getText().toString();
+            //System.out.println(temp);
+            //codes[contCode] = temp;
+            c.add(temp);
             contCode++;
             cod.setText("");
-            System.out.println(contCode);
+            //System.out.println(codes.length);
+            //System.out.println(contCode);
         }
     }//GEN-LAST:event_codActionPerformed
  

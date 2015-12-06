@@ -2,12 +2,17 @@
 package softinvent;
 
 import Conection.Conectar;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +22,7 @@ public class Embarques extends javax.swing.JFrame {
     private Statement st;
     private Connection connection;
     private int contCode = 0;
-    private int[] codes = new int[100000];
+    private ArrayList<String> codes = new ArrayList<>();
     
     public Embarques() {
         initComponents();
@@ -204,23 +209,46 @@ public class Embarques extends javax.swing.JFrame {
         String selUnidad  = comboUnidad.getSelectedItem().toString();
         String selOrigen  = comboOrigen.getSelectedItem().toString();
         String selDestino = comboDestino.getSelectedItem().toString();
-        int trans = Integer.parseInt(transfer.getText());
+        String trans = transfer.getText().toString();
+        String name = trans + ".txt";
         
         try {
-            Conectar cc = new Conectar();
-            Connection cn = cc.Conexion();
+            File path = new File("C:/Arantza/Embarques");
             
-            PreparedStatement pst = cn.prepareStatement("INSERT INTO embarques (chofer, unidad, origen, destino, Transferencia, codigo) VALUES (?,?,?,?,?,?)");
+            if (!path.exists()) {
+                path.mkdir();
+            } 
             
-            for (Integer code: codes) {
-                pst.setString(1, selChofer);
-                pst.setString(2, selUnidad);
-                pst.setString(3, selOrigen);
-                pst.setString(4, selDestino);
-                pst.setInt(5, trans);
-                pst.setInt(6, code);
+            File file = new File("C:/Arantza/Embarques/" + name );
+            
+            if (!file.exists()) {
+                file.createNewFile();
             }
-        } catch (Exception e) {
+            
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            
+            bw.write(selChofer);
+            bw.newLine();
+            bw.write(selUnidad);
+            bw.newLine();
+            bw.write(selOrigen);
+            bw.newLine();
+            bw.write(selDestino);
+            bw.newLine();
+            bw.write(trans);
+            bw.newLine();
+            
+            for (String code: codes) {
+                bw.write(code);
+                bw.newLine();
+                System.out.println(code);
+            }
+            
+            bw.close();
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_saveBtnActionPerformed
 
@@ -229,12 +257,11 @@ public class Embarques extends javax.swing.JFrame {
         if (codigo.getText().isEmpty()) {
             codigo.setText("");
         } else {
-            int temp = Integer.parseInt(codigo.getText());
+            String temp = codigo.getText().toString();
             System.out.println(temp);
-            codes[contCode] = temp;
+            codes.add(temp);
             contCode++;
             codigo.setText("");
-            System.out.println(contCode);
         }
     }//GEN-LAST:event_codigoActionPerformed
 
