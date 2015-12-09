@@ -6,19 +6,36 @@
 
 package softinvent;
 
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+
 /**
  *
  * @author Ruth
  */
 public class VConsulta1 extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VConsulta1
-     */
-    public VConsulta1() {
+    private int contCode = 0;
+    private ArrayList<String> c = new ArrayList<>();
+    private ArrayList<String> chofer = new ArrayList<>();
+    private ArrayList<String> unidad = new ArrayList<>();
+    
+    public VConsulta1() throws FileNotFoundException {
         initComponents();
+        
+        LeerTexto chofer = new LeerTexto("C:/Arantza/Utils/Choferes.txt");
+        LeerTexto unidad = new LeerTexto("C:/Arantza/Utils/Destino.txt");
+        
+        this.chofer = chofer.getText();
+        this.unidad = unidad.getText();
+        
+        this.comboChofer.setModel(new DefaultComboBoxModel(this.chofer.toArray()));
+        this.comboUnidad.setModel(new DefaultComboBoxModel(this.unidad.toArray()));
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,17 +53,17 @@ public class VConsulta1 extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        comboUnidad = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jScrollBar1 = new javax.swing.JScrollBar();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        fecha = new javax.swing.JTextField();
+        transfer = new javax.swing.JTextField();
+        codigo = new javax.swing.JTextField();
+        guia = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
+        comboChofer = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,10 +97,10 @@ public class VConsulta1 extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("FECHA:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "*", "U1", "U2", "U3", "U4", "U5", "U6", "U7" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        comboUnidad.setModel(new javax.swing.DefaultComboBoxModel(new String[] {  }));
+        comboUnidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                comboUnidadActionPerformed(evt);
             }
         });
 
@@ -119,9 +136,15 @@ public class VConsulta1 extends javax.swing.JFrame {
                 .addContainerGap(47, Short.MAX_VALUE))
         );
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        fecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                fechaActionPerformed(evt);
+            }
+        });
+
+        codigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                codigoActionPerformed(evt);
             }
         });
 
@@ -132,6 +155,8 @@ public class VConsulta1 extends javax.swing.JFrame {
             }
         });
 
+        comboChofer.setModel(new javax.swing.DefaultComboBoxModel(new String[] {  }));
+
         javax.swing.GroupLayout VConsulta1Layout = new javax.swing.GroupLayout(VConsulta1);
         VConsulta1.setLayout(VConsulta1Layout);
         VConsulta1Layout.setHorizontalGroup(
@@ -141,17 +166,17 @@ public class VConsulta1 extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(VConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
-                    .addComponent(jTextField5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 278, Short.MAX_VALUE)
+                    .addComponent(comboChofer, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(guia, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(VConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                    .addComponent(jTextField3))
-                .addGap(167, 167, 167)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(161, 161, 161))
+                    .addComponent(codigo, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                    .addComponent(transfer))
+                .addGap(152, 152, 152)
+                .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(152, 152, 152))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VConsulta1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(166, Short.MAX_VALUE)
                 .addGroup(VConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VConsulta1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -173,15 +198,13 @@ public class VConsulta1 extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(293, 293, 293)
-                            .addGroup(VConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(VConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(VConsulta1Layout.createSequentialGroup()
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(VConsulta1Layout.createSequentialGroup()
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(90, 90, 90)))))
-                    .addContainerGap(161, Short.MAX_VALUE)))
+                                    .addComponent(comboUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addContainerGap(152, Short.MAX_VALUE)))
         );
         VConsulta1Layout.setVerticalGroup(
             VConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,14 +212,14 @@ public class VConsulta1 extends javax.swing.JFrame {
                 .addGap(141, 141, 141)
                 .addGroup(VConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(VConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                        .addComponent(guia, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                         .addComponent(jLabel1))
-                    .addComponent(jTextField3))
+                    .addComponent(transfer))
                 .addGap(26, 26, 26)
                 .addGroup(VConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboChofer, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
@@ -210,7 +233,7 @@ public class VConsulta1 extends javax.swing.JFrame {
                     .addGroup(VConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(comboUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(27, 27, 27)
                     .addGroup(VConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -233,19 +256,34 @@ public class VConsulta1 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void comboUnidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboUnidadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_comboUnidadActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void fechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_fechaActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         VMenu vm = new VMenu();
         vm.setVisible(true);
         this.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoActionPerformed
+        if (codigo.getText().isEmpty()) {
+            codigo.setText("");
+        } else {
+            String temp = codigo.getText().toString();
+            //System.out.println(temp);
+            //codes[contCode] = temp;
+            c.add(temp);
+            contCode++;
+            codigo.setText("");
+            //System.out.println(codes.length);
+            //System.out.println(contCode);
+        }
+    }//GEN-LAST:event_codigoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -277,15 +315,23 @@ public class VConsulta1 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VConsulta1().setVisible(true);
+                try {
+                    new VConsulta1().setVisible(true);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(VConsulta1.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel VConsulta1;
+    private javax.swing.JTextField codigo;
+    private javax.swing.JComboBox comboChofer;
+    private javax.swing.JComboBox comboUnidad;
+    private javax.swing.JTextField fecha;
+    private javax.swing.JTextField guia;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -297,10 +343,6 @@ public class VConsulta1 extends javax.swing.JFrame {
     private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField transfer;
     // End of variables declaration//GEN-END:variables
 }

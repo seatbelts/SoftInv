@@ -121,7 +121,7 @@ public class VMenu extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
          Conexxion  cc = new Conexxion("root","","arantza","localhost");
-         String path ="C:\\Users\\Ruth\\Desktop\\SoftInvent\\src\\softinvent\\reporte.jasper";
+         String path ="C:\\Arantza\\reporte.jasper";
          JasperReport jr;
         try {
             jr=(JasperReport) JRLoader.loadObjectFromFile(path);

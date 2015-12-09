@@ -4,6 +4,7 @@ package softinvent;
 import Conection.Conectar;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,6 +16,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 
 public class Embarques extends javax.swing.JFrame {
     
@@ -23,45 +25,29 @@ public class Embarques extends javax.swing.JFrame {
     private Connection connection;
     private int contCode = 0;
     private ArrayList<String> codes = new ArrayList<>();
+    private ArrayList<String> chofer = new ArrayList<>();
+    private ArrayList<String> origen = new ArrayList<>();
+    private ArrayList<String> destino = new ArrayList<>();
+    private ArrayList<String> unidad = new ArrayList<>();
     
-    public Embarques() {
+    public Embarques() throws FileNotFoundException {
         initComponents();
         
-        try {
-            
-            Class.forName("org.gjt.mm.mysql.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/arantza","root","");
-            st = connection.createStatement();
-            
-            String choferQ = "select * from chofer"; 
-            String unidadQ = "select * from unidad";
-            String origenQ = "select * from origen";
-            String destinoQ = "select * from destino";
-         
-            
-            rs = st.executeQuery(choferQ); 
-            while(rs.next()) { 
-                comboChofer.addItem(rs.getString(1));
-            } 
-            
-            rs = st.executeQuery(unidadQ); 
-            while(rs.next()) { 
-                comboUnidad.addItem(rs.getString(1));
-            }
-            
-            rs = st.executeQuery(origenQ);
-            while (rs.next()) {
-                comboOrigen.addItem(rs.getString(1));
-            }
-            
-            rs = st.executeQuery(destinoQ);
-            while (rs.next()) {
-                comboDestino.addItem(rs.getString(1));
-            }
-            
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(VRegistro1.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        LeerTexto chofer = new LeerTexto("C:/Arantza/Utils/Choferes.txt");
+        LeerTexto unidad = new LeerTexto("C:/Arantza/Utils/Unidad.txt");
+        LeerTexto origen = new LeerTexto("C:/Arantza/Utils/Origen.txt");
+        LeerTexto destino = new LeerTexto("C:/Arantza/Utils/Destino.txt");
+        
+        this.chofer = chofer.getText();
+        this.origen = origen.getText();
+        this.destino = destino.getText();
+        this.unidad = unidad.getText();
+        
+        this.comboChofer.setModel(new DefaultComboBoxModel(this.chofer.toArray()));
+        this.comboOrigen.setModel(new DefaultComboBoxModel(this.origen.toArray()));
+        this.comboDestino.setModel(new DefaultComboBoxModel(this.destino.toArray()));
+        this.comboUnidad.setModel(new DefaultComboBoxModel(this.unidad.toArray()));
+   
     }
 
     /**
@@ -302,7 +288,11 @@ public class Embarques extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Embarques().setVisible(true);
+                try {
+                    new Embarques().setVisible(true);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(Embarques.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
