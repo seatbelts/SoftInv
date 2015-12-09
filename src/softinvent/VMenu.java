@@ -1,5 +1,6 @@
 package softinvent;
 
+import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.sf.jasperreports.engine.JRException;
@@ -30,6 +31,7 @@ public class VMenu extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        consultaBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,6 +63,13 @@ public class VMenu extends javax.swing.JFrame {
             }
         });
 
+        consultaBtn.setText("Consulta");
+        consultaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultaBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -71,7 +80,9 @@ public class VMenu extends javax.swing.JFrame {
                         .addGap(167, 167, 167)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(55, 55, 55)
-                        .addComponent(jButton3)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(consultaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -94,6 +105,8 @@ public class VMenu extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(207, 207, 207)
                         .addComponent(jButton3)
+                        .addGap(32, 32, 32)
+                        .addComponent(consultaBtn)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -114,9 +127,15 @@ public class VMenu extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         
-        VRegistro1 vr = new VRegistro1();
-         vr.setVisible(true);
-        this.setVisible(false);
+        VRegistro1 vr;
+        try {
+            vr = new VRegistro1();
+            vr.setVisible(true);
+            this.setVisible(false);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(VMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -138,10 +157,28 @@ public class VMenu extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        Embarques emb = new Embarques();
-        emb.setVisible(true);
-        this.setVisible(false);
+        Embarques emb;
+        try {
+            emb = new Embarques();
+            emb.setVisible(true);
+            this.setVisible(false);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(VMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void consultaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaBtnActionPerformed
+        // TODO add your handling code here:
+        VConsulta1 cons;
+        try {
+            cons = new VConsulta1();
+            cons.setVisible(true);
+            this.setVisible(false);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(VMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_consultaBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -173,13 +210,18 @@ public class VMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VRegistro1().setVisible(true);
+                try {
+                    new VRegistro1().setVisible(true);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(VMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton consultaBtn;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

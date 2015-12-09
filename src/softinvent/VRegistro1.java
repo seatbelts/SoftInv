@@ -323,13 +323,9 @@ public class VRegistro1 extends javax.swing.JFrame {
             cod.setText("");
         } else {
             String temp = cod.getText().toString();
-            //System.out.println(temp);
-            //codes[contCode] = temp;
             c.add(temp);
             contCode++;
             cod.setText("");
-            //System.out.println(codes.length);
-            //System.out.println(contCode);
         }
     }//GEN-LAST:event_codActionPerformed
  

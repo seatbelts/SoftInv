@@ -1,21 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package softinvent;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 
-/**
- *
- * @author Ruth
- */
 public class VConsulta1 extends javax.swing.JFrame {
 
     private int contCode = 0;
@@ -27,7 +22,7 @@ public class VConsulta1 extends javax.swing.JFrame {
         initComponents();
         
         LeerTexto chofer = new LeerTexto("C:/Arantza/Utils/Choferes.txt");
-        LeerTexto unidad = new LeerTexto("C:/Arantza/Utils/Destino.txt");
+        LeerTexto unidad = new LeerTexto("C:/Arantza/Utils/Unidad.txt");
         
         this.chofer = chofer.getText();
         this.unidad = unidad.getText();
@@ -64,6 +59,7 @@ public class VConsulta1 extends javax.swing.JFrame {
         guia = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         comboChofer = new javax.swing.JComboBox();
+        save = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -157,6 +153,13 @@ public class VConsulta1 extends javax.swing.JFrame {
 
         comboChofer.setModel(new javax.swing.DefaultComboBoxModel(new String[] {  }));
 
+        save.setText("Guardar");
+        save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout VConsulta1Layout = new javax.swing.GroupLayout(VConsulta1);
         VConsulta1.setLayout(VConsulta1Layout);
         VConsulta1Layout.setHorizontalGroup(
@@ -184,6 +187,10 @@ public class VConsulta1 extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VConsulta1Layout.createSequentialGroup()
                         .addComponent(jButton3)
                         .addGap(27, 27, 27))))
+            .addGroup(VConsulta1Layout.createSequentialGroup()
+                .addGap(626, 626, 626)
+                .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(VConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(VConsulta1Layout.createSequentialGroup()
                     .addGroup(VConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,7 +227,9 @@ public class VConsulta1 extends javax.swing.JFrame {
                     .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboChofer, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jButton3)
@@ -275,15 +284,57 @@ public class VConsulta1 extends javax.swing.JFrame {
             codigo.setText("");
         } else {
             String temp = codigo.getText().toString();
-            //System.out.println(temp);
-            //codes[contCode] = temp;
             c.add(temp);
             contCode++;
             codigo.setText("");
-            //System.out.println(codes.length);
-            //System.out.println(contCode);
         }
     }//GEN-LAST:event_codigoActionPerformed
+
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        // TODO add your handling code here:
+        String selChofer  = comboChofer.getSelectedItem().toString();
+        String selUnidad  = comboUnidad.getSelectedItem().toString();
+        String numGuia = guia.getText().toString();
+        String trans = transfer.getText().toString();
+        String name = trans + ".txt";
+        
+        try {
+            File path = new File("C:/Arantza/Reportes");
+            
+            if (!path.exists()) {
+                path.mkdir();
+            } 
+            
+            File file = new File("C:/Arantza/Reportes/" + name);
+            
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            
+            bw.write(selChofer);
+            bw.newLine();
+            bw.write(selUnidad);
+            bw.newLine();
+            bw.write(trans);
+            bw.newLine();
+            bw.write(numGuia);
+            bw.newLine();
+            
+            for (String code: c) {
+                bw.write(code);
+                bw.newLine();
+                System.out.println(code);
+            }
+            
+            bw.close();
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_saveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -343,6 +394,7 @@ public class VConsulta1 extends javax.swing.JFrame {
     private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton save;
     private javax.swing.JTextField transfer;
     // End of variables declaration//GEN-END:variables
 }
